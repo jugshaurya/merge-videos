@@ -1,84 +1,94 @@
 "use strict";
-const path = require("path");
+const { join } = require("path");
+const { readdirSync, lstatSync } = require("fs");
 const videoStitch = require("video-stitch");
 const videoConcat = videoStitch.concat;
 
-// const folderToReadPath = process.argv.slice(2)[0];
-const fs = require("fs");
+/* check to see if a @source route is a directory or not*/
+const isDirectory = (source) => lstatSync(source).isDirectory();
 
-// steps
-// 1. move videos inside assets folder - DONE
-// 2. get all the mp4/mkv files names to be merged into one in order mentioned by initial video number (1.something, 2.somethingmore .....)
+/* check to see if a @source route is a directory or not*/
+const isFile = (source) => lstatSync(source).isFile();
 
-const isDirectory = (source) => fs.lstatSync(source).isDirectory();
-const isFile = (source) => fs.lstatSync(source).isFile();
-
-const getDirectories = (source) =>
-  fs
-    .readdirSync(source)
-    .map((name) => path.join(source, name))
-    .filter(isDirectory);
-
+/* filter a @file if it ends with ".mp4 or .mkv"*/
 const isMp4OrMkv = (file) =>
   file.substr(file.length - 4) === ".mp4" ||
   file.substr(file.length - 4) === ".mkv";
 
-console.log(isMp4OrMkv("sadsadsad.mp4"));
+/* get one level directories inside a @source path */
+const getDirectories = (source) =>
+  readdirSync(source)
+    .map((name) => join(source, name))
+    .filter(isDirectory);
+
+/* get one level `mp4 or mkv` files inside a @source path */
 const getMp4orMkvFiles = (source) =>
-  fs
-    .readdirSync(source)
-    .map((name) => path.join(source, name))
+  readdirSync(source)
+    .map((name) => join(source, name))
     .filter(isFile)
     .filter(isMp4OrMkv);
 
-const getAllFolderSubfolderDirs = (rootPath) => {
-  const directories = [];
-  const subDirectories = getDirectories(rootPath);
-  subDirectories.forEach((directory) => {
-    directories.push(directory);
-
-    directories.push(...getAllFolderSubfolderDirs(directory));
-  });
-  return directories;
+/* get path list of all subdirectories at any depth/level inside @source directory*/
+const getAllFolderSubfolderDirs = (source) => {
+  if (source.isDirectory()) {
+    const directories = [];
+    // get all the subdirectories
+    const subDirectories = getDirectories(source);
+    // for each subdirectory, get a list of subdirectories in [depth first(dfs) fashion]
+    subDirectories.forEach((directory) => {
+      directories.push(directory);
+      directories.push(...getAllFolderSubfolderDirs(directory));
+    });
+    return directories;
+  } else {
+    throw new Error("Please give a directory path, not a file path!");
+  }
 };
 
-const pathToVideosFolder = path.join(__dirname, "assets");
-const allDirectories = getAllFolderSubfolderDirs(pathToVideosFolder);
-// console.log(allDirectories);
+function main() {
+  /* get the added folder that contains videos inside assets folder */
+  const directoryList = getAllFolderSubfolderDirs(join(__dirname, "assets"));
 
-// 3. get all the files names in a list
+  const sortStringNumerically = (a, b) => {
+    // path will be like x/y/z/1.something.mp4
+    // retriving only 1.something and then 1 from it
+    // Note: Hence files should be named as 1.something,`where 1 and . are compulsory`
+    const alphaSplit = a.split("/");
+    const alpha = alphaSplit[alphaSplit.length - 1];
+    const bettaSplit = b.split("/");
+    const betta = bettaSplit[bettaSplit.length - 1];
 
-const files = allDirectories.reduce((acc, directory) => {
-  const files = getMp4orMkvFiles(directory).sort((a, b) => {
-    const splittedString = a.split("/");
-    const alpha = splittedString[splittedString.length - 1];
-
-    const splittedStringb = b.split("/");
-    const betta = splittedStringb[splittedStringb.length - 1];
     return parseInt(alpha.split(".")[0]) - parseInt(betta.split(".")[0]);
-  });
-  acc.push(...files);
-  return acc;
-}, []);
+  };
 
-// console.log(files);
+  /* retrive the `mp4 or mkv` files from each directory*/
+  const files = directoryList.reduce((acc, directory) => {
+    const files = getMp4orMkvFiles(directory).sort(sortStringNumerically);
+    acc.push(...files);
+    return acc;
+  }, []);
 
-videoConcat({
-  silent: true,
-  overwrite: false,
-})
-  .clips(
-    files.map((file) => ({
-      fileName: file,
-    }))
-  )
-  .output(path.join(__dirname, "assets", "output", "congrats.mp4"))
-  .concat()
-  .then((outputFileName) => {
-    console.log("sad");
-    console.log(outputFileName);
+  // 😁 merge the files together 😁
+  videoConcat({
+    silent: true,
+    overwrite: false,
   })
-  .catch((err) => {
-    console.log("saderr");
-    console.log(err);
-  });
+    .clips(
+      files.map((file) => ({
+        fileName: file,
+      }))
+      // TODO: show the progress bar
+    )
+    .output(join(__dirname, "output", "congrats.mp4"))
+    .concat()
+    .then((outputFileName) => {
+      console.log("Congrats your file is generated inside output folder");
+      console.log(outputFileName);
+    })
+    .catch((err) => {
+      console.log("SOmething went wrong so sorry!");
+      console.log(err);
+    });
+}
+
+main();
