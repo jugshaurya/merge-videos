@@ -105,4 +105,4 @@ dist
 
 # dont push videos
 
-assets/*.*
+assets/**/*.*
