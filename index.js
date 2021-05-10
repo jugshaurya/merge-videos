@@ -1,7 +1,7 @@
 "use strict";
 const path = require("path");
 const videoStitch = require("video-stitch");
-// const videoConcat = videoStitch.concat;
+const videoConcat = videoStitch.concat;
 
 // const folderToReadPath = process.argv.slice(2)[0];
 const fs = require("fs");
@@ -61,66 +61,24 @@ const files = allDirectories.reduce((acc, directory) => {
   return acc;
 }, []);
 
-console.log(files);
-const list = [
-  "alpha/1.q",
-  "alpha/10. sad",
-  "alpha/11.aewqe",
-  "alpha/12.saw",
-  "alpha/13.wrer",
-  "alpha/14.asd",
-  "alpha/15.wqe",
-  "alpha/16.sad",
-  "alpha/17.awq",
-  "alpha/2.as23",
-  "alpha/3.dvc",
-  "alpha/4.fgg",
-  "alpha/5.fgh",
-  "alpha/6.wqe",
-  "alpha/7.waqewq",
-  "alpha/8.wqawq",
-  "alpha/9.oip",
-].sort((a, b) => {
-  const splittedString = a.split("/");
-  const alpha = splittedString[splittedString.length - 1];
-
-  const splittedStringb = b.split("/");
-  const betta = splittedStringb[splittedStringb.length - 1];
-  return parseInt(alpha.split(".")[0]) - parseInt(betta.split(".")[0]);
-});
-
-// const splittedString = a.split("/");
-// const alpha = a.substr(splittedString.length - 1);
-// console.log(alpha);
-console.log(list);
 // console.log(files);
-// videoConcat({
-//   silent: true,
-//   overwrite: false,
-// })
-//   .clips([
-//     {
-//       fileName: path.join(
-//         __dirname,
-//         "assets",
-//         "1. What is a Regular Expression.mp4"
-//       ),
-//     },
-//     {
-//       fileName: path.join(
-//         __dirname,
-//         "assets",
-//         "2. Regular Expression Readability.mp4"
-//       ),
-//     },
-//   ])
-//   .output(path.join(__dirname, "assets", "ouou.mp4"))
-//   .concat()
-//   .then((outputFileName) => {
-//     console.log("sad");
-//     console.log(outputFileName);
-//   })
-//   .catch((err) => {
-//     console.log("saderr");
-//     console.log(err);
-//   });
+
+videoConcat({
+  silent: true,
+  overwrite: false,
+})
+  .clips(
+    files.map((file) => ({
+      fileName: file,
+    }))
+  )
+  .output(path.join(__dirname, "assets", "output", "congrats.mp4"))
+  .concat()
+  .then((outputFileName) => {
+    console.log("sad");
+    console.log(outputFileName);
+  })
+  .catch((err) => {
+    console.log("saderr");
+    console.log(err);
+  });
