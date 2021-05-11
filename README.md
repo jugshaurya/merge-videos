@@ -67,4 +67,4 @@ and you wish to merge the mp4 or mkv files together just
 
 - Congrats!, you got all the video files merged into output directory as congrats.mp4
 
-- If you wish to do the same with one more folder, delete the added folder from the assets folder and follow the steps again.
+- If you wish to do the same with one more folder, delete the added folder from the assets folder and congrats.mp4 from output and follow the steps again.
