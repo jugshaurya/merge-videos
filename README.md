@@ -66,12 +66,6 @@ and you wish to merge the mp4 or mkv files together just
   cd merge-videos
 
   ```
-- run 
-
-  ```cmd
-  npm install
-
-  ```
 
 - Execute the below command and wait for something to be printed on the screen. When something prints, outputfile is generated congrats!😁 or some error occured.😤. Feel free to open a issue or PR.
 
