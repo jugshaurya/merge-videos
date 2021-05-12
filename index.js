@@ -2,6 +2,8 @@
 const { join } = require("path");
 const { readdirSync, lstatSync } = require("fs");
 const videoStitch = require("video-stitch");
+
+const videoConcat = videoStitch.concat;
 // const concat = require("ffmpeg-concat");
 
 /* check to see if a @source route is a directory or not*/
