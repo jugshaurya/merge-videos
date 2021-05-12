@@ -38,14 +38,6 @@ Learn Merging Videos
 
 ```
 
-output will here:-
-
-```cmd
-└── output
-  ├── congrats.mp4
-
-```
-
 and you wish to merge the mp4 or mkv files together just
 
 ### 🍿 Follow these steps
@@ -62,9 +54,13 @@ and you wish to merge the mp4 or mkv files together just
 - Change directory to the local merge-video repo
 
   ```cmd
-
   cd merge-videos
+  ```
 
+- Install Dependencies
+
+  ```cmd
+  yarn
   ```
 
 - Execute the below command and wait for something to be printed on the screen. When something prints, outputfile is generated congrats!😁 or some error occured.😤. Feel free to open a issue or PR.
@@ -77,6 +73,14 @@ and you wish to merge the mp4 or mkv files together just
 
 - If you wish to do the same with one more video folder, delete the added folder from the assets folder and congrats.mp4 from output(optional but will `override` the previous generated congrats.mp4) and follow the steps again.
 
+output will here:-
+
+```cmd
+└── output
+  ├── congrats.mp4
+
+```
+
 ### 🤕 Note/Beware:
 
 Please make sure all videos and folders name are marked with `<number>.<anything>` i.e. `1.something` `2.somethingelse` and so on...
@@ -88,3 +92,5 @@ Please make sure all videos and folders name are marked with `<number>.<anything
 ### Stretch
 
 - [ ] Let user input the output filename.
+- [ ] Let user input the output path.
+- [ ] Write tests via jest.

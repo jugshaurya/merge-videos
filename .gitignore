@@ -112,6 +112,9 @@ output/**/*.*
 !output/.gitkeep
 !assets/.gitkeep
 
+# Only use yarn
+package-lock.json
+
 # all mp4/mkv files anywhere in this project
 *.mp4
 **/*.mp4
