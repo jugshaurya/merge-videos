@@ -2,7 +2,7 @@
 const { join } = require("path");
 const { readdirSync, lstatSync } = require("fs");
 const videoStitch = require("video-stitch");
-const videoConcat = videoStitch.concat;
+// const concat = require("ffmpeg-concat");
 
 /* check to see if a @source route is a directory or not*/
 const isDirectory = (source) => lstatSync(source).isDirectory();
@@ -57,6 +57,29 @@ const getAllFolderSubfolderDirs = (source) => {
   }
 };
 
+const mergeVideos = (files) => {
+  // TODO: show the progress bar
+  videoConcat({
+    silent: true, // optional. if set to false, gives detailed output on console
+    overwrite: true, // optional. by default, if file already exists, ffmpeg will ask for overwriting in console and that pause the process. if set to true, it will force overwriting. if set to false it will prevent overwriting.
+  })
+    .clips(
+      files.map((file) => ({
+        fileName: file,
+      }))
+    )
+    .output(join(__dirname, "output", "congrats.mp4"))
+    .concat()
+    .then((outputFileName) => {
+      console.log("Congrats your file is generated inside output folder");
+      console.log(outputFileName);
+    })
+    .catch((err) => {
+      console.log("Something went wrong so sorry!");
+      console.log("Error:", err);
+    });
+};
+
 function main() {
   /* get the added folder that contains videos inside assets folder */
   const directoryList = getAllFolderSubfolderDirs(join(__dirname, "assets"));
@@ -71,32 +94,10 @@ function main() {
   // 😁 merge the files together 😁
   console.dir(files, { maxArrayLength: null });
   console.log(
-    "\n==================Merging these files in the same above list order========\n"
+    `\n ✔ ⬆⬆⬆ Merging these files(${files.length}) in the same above list order; please check the order above \n`
   );
 
-  // TODO: show the progress bar
-  videoConcat({
-    silent: false, // optional. if set to false, gives detailed output on console
-    overwrite: true, // optional. by default, if file already exists, ffmpeg will ask for overwriting in console and that pause the process. if set to true, it will force overwriting. if set to false it will prevent overwriting.
-  })
-    .clips(
-      files.map((file, i) => {
-        console.log("howmany", i);
-        return {
-          fileName: file,
-        };
-      })
-    )
-    .output(join(__dirname, "output", "congrats.mp4"))
-    .concat()
-    .then((outputFileName) => {
-      console.log("Congrats your file is generated inside output folder");
-      console.log(outputFileName);
-    })
-    .catch((err) => {
-      console.log("Something went wrong so sorry!");
-      console.log(err);
-    });
+  mergeVideos(files);
 }
 
 main();

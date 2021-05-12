@@ -1,6 +1,6 @@
 # 🏆 merge-videos
 
-😁😁 Merge Videos inside a directory into a single video :)
+😁😁 Merge Videos inside a directory into a Single Video file :)
 
 ## 🥅 You wish to merge all videos inside a folder into one video
 
@@ -8,17 +8,17 @@ Let's say you wish to merge videos inside `Learn Merging Videos` folder like
 
 ```cmd
 Learn Merging Videos
-├── 1. Section A
+└── 1. Section A
   ├── 1. Learn Merging I.mp4
   ├── 2. Learn Merging II.mp4
   ├── 3. Learn Merging III.mkv
   ├── 4. Learn Merging IV.mkv
   ├── 5. More.html
-├── 2. Section B
+└── 2. Section B
   ├── 1. Learn MergingB I.mp4
   ├── 2. Learn MergingB II.txt
   ├── 3. Learn MergingB III.mp4
-├── 3. Section C
+└── 3. Section C
   ├── 1. Learn MergingC I.txt
   ├── 2. Learn MergingC II.mp4
   ├── 3. Learn MergingC III.mp4
@@ -34,7 +34,15 @@ Learn Merging Videos
 └── 4. Section D
   ├── 1. Learn MergingD I.mp4
   ├── 2. Learn MergingD II.mp4
-  ├── 3. Learn MergingD III.mp4
+  └── 3. Learn MergingD III.mp4
+
+```
+
+output will here:-
+
+```cmd
+└── output
+  ├── congrats.mp4
 
 ```
 
@@ -67,4 +75,16 @@ and you wish to merge the mp4 or mkv files together just
 
 - Congrats!, you got all the video files merged into output directory as congrats.mp4
 
-- If you wish to do the same with one more folder, delete the added folder from the assets folder and congrats.mp4 from output and follow the steps again.
+- If you wish to do the same with one more video folder, delete the added folder from the assets folder and congrats.mp4 from output(optional but will `override` the previous generated congrats.mp4) and follow the steps again.
+
+### 🤕 Note/Beware:
+
+Please make sure all videos and folders name are marked with `<number>.<anything>` i.e. `1.something` `2.somethingelse` and so on...
+
+## Peek a boo!
+
+![demo](demooutput.png)
+
+### Stretch
+
+- [ ] Let user input the output filename.
