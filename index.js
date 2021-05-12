@@ -2,7 +2,11 @@
 const { join } = require("path");
 const { readdirSync, lstatSync } = require("fs");
 const videoStitch = require("video-stitch");
+const ora = require("ora");
 // const concat = require("ffmpeg-concat");
+
+// initialize the spinner with a message
+const spinner = ora("Merging...");
 
 /* check to see if a @source route is a directory or not*/
 const isDirectory = (source) => lstatSync(source).isDirectory();
@@ -58,7 +62,9 @@ const getAllFolderSubfolderDirs = (source) => {
 };
 
 const mergeVideos = (files) => {
-  // TODO: show the progress bar
+  // start the spinner
+  spinner.start();
+
   videoConcat({
     silent: true, // optional. if set to false, gives detailed output on console
     overwrite: true, // optional. by default, if file already exists, ffmpeg will ask for overwriting in console and that pause the process. if set to true, it will force overwriting. if set to false it will prevent overwriting.
@@ -71,10 +77,14 @@ const mergeVideos = (files) => {
     .output(join(__dirname, "output", "congrats.mp4"))
     .concat()
     .then((outputFileName) => {
+      // stop the spinner
+      spinner.stop();
       console.log("Congrats your file is generated inside output folder");
       console.log(outputFileName);
     })
     .catch((err) => {
+      // stop the spinner
+      spinner.stop();
       console.log("Something went wrong so sorry!");
       console.log("Error:", err);
     });
