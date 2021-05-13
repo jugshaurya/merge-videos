@@ -89,8 +89,9 @@ Please make sure all videos and folders name are marked with `<number>.<anything
 
 ![demo](demooutput.png)
 
-### Stretch
+### Stretch and Rethinking
 
 - [ ] Let user input the output filename.
 - [ ] Let user input the output path.
 - [ ] Write tests via jest.
+- [ ] Create a command (node jugshaurya clean) to delete files from assets and output folder.

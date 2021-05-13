@@ -66,7 +66,7 @@ const spinner = ora("Merging...");
 const mergeVideos = (files) => {
   spinner.start();
   videoConcat({
-    silent: true, // optional. if set to false, gives detailed output on console
+    silent: false, // optional. if set to false, gives detailed output on console
     overwrite: true, // optional. by default, if file already exists, ffmpeg will ask for overwriting in console and that pause the process. if set to true, it will force overwriting. if set to false it will prevent overwriting.
   })
     .clips(
@@ -105,6 +105,8 @@ const main = () => {
     `\n ✔ ⬆⬆⬆ Merging these files(${files.length}) in the same above list order; please check the order above \n`
   );
 
+  // console.log("Are you satisfied with the above order ? Do you want to proceed?")
+  // TODO: Ask user before merging Yes or No
   mergeVideos(files);
 };
 
