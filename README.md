@@ -38,7 +38,7 @@ Learn Merging Videos
 
 ```
 
-and you wish to merge the mp4 or mkv files together just
+and you wish to merge the mp4 or mkv or m4v files together just
 
 ### 🍿 Follow these steps
 
@@ -95,3 +95,8 @@ Please make sure all videos and folders name are marked with `<number>.<anything
 - [ ] Let user input the output path.
 - [ ] Write tests via jest.
 - [ ] Create a command (node jugshaurya clean) to delete files from assets and output folder.
+
+### Important/Maybe/open-a-issue
+
+- [ ] Add a preprocessing step
+  - get all the mp4 files from deep down into the root folder, rename them into order 1,2,3,4,5,....... and then merge.

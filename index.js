@@ -16,8 +16,9 @@ const isDirectory = (source) => lstatSync(source).isDirectory();
 const isFile = (source) => lstatSync(source).isFile();
 
 /* filter a @file if it ends with ".mp4 or .mkv"*/
-const isMp4OrMkv = (file) =>
+const isMp4OrMkvorM4v = (file) =>
   file.substr(file.length - 4) === ".mp4" ||
+  file.substr(file.length - 4) === ".m4v" ||
   file.substr(file.length - 4) === ".mkv";
 
 /* get one level directories inside a @source path */
@@ -31,7 +32,7 @@ const getMp4orMkvFiles = (source) =>
   readdirSync(source)
     .map((name) => join(source, name))
     .filter(isFile)
-    .filter(isMp4OrMkv);
+    .filter(isMp4OrMkvorM4v);
 
 const sortStringNumerically = (a, b) => {
   // path will be like x/y/z/1.something.mp4
