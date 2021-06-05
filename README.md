@@ -95,8 +95,13 @@ Please make sure all videos and folders name are marked with `<number>.<anything
 - [ ] Let user input the output path.
 - [ ] Write tests via jest.
 - [ ] Create a command (node jugshaurya clean) to delete files from assets and output folder.
+- [ ] Add timestamp to the generated congrats\_[timestam].mp4 file, so to merge more videos without deleting congrats.mp4 first and update corresponding rule from readme(point before output will be there!).
 
 ### Important/Maybe/open-a-issue
 
 - [ ] Add a preprocessing step
+
   - get all the mp4 files from deep down into the root folder, rename them into order 1,2,3,4,5,....... and then merge.
+
+- [ ] Showing error for the gfg stl course(dfs problem, check code, create visited array for each node.)
+      ![](messsed_up.png)

@@ -19,6 +19,7 @@ const isFile = (source) => lstatSync(source).isFile();
 const isMp4OrMkvorM4v = (file) =>
   file.substr(file.length - 4) === ".mp4" ||
   file.substr(file.length - 4) === ".m4v" ||
+  file.substr(file.length - 3) === ".ts" ||
   file.substr(file.length - 4) === ".mkv";
 
 /* get one level directories inside a @source path */
